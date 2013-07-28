@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var express = express = require('express')
   ,	app = express()
   , server = require('http').createServer(app)
@@ -13,7 +15,7 @@ var express = express = require('express')
 	};
 
    app.configure(function(){
-        app.set('views', __dirname + '/views');
+        app.set('views', './lib/views');
         app.set('view engine', 'ejs');
 		app.set('view options', { layout: false });
         app.use(express.bodyParser());
