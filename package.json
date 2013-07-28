@@ -1,0 +1,28 @@
+{
+  "author": "rui marinho",
+  "name": "picamera",
+  "description": "Node package for the PiCamera app.",
+  "version": "0.0.1",
+  "repository": {
+    "type" : "git",
+    "url": "https://github.com/rmarinho/picamera.git"
+  },
+  "dependencies": {
+    "express" : "*"
+  , "socket.io-client" : "*"
+    },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "readmeFilename": "README.md",
+  "gitHead": "129fa0c54ce5f9537f74bb6620ec982849504442",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "keywords": [
+    "picamera"
+  ],
+  "license": "BSD"
+}
