@@ -1,17 +1,22 @@
 $(function() {
     var client = new WindowsAzure.MobileServiceClient('https://picamera.azure-mobile.net/', 'mGiSqeXTFjXdWinsCDkZYYZxJHoIEF50'),
-        todoItemTable = client.getTable('raspberrys'),
+        raspberrys = client.getTable('raspberrys'),
         picameraRequestObject = {
-                macAddress: '',
-                boxName: '',
+                boxMacAddress: '',
+                name: '',
                 boxDescription: '',
-                userID: '',
-                token: ''
+                token: '',
+                active: true
         };
 
     function refreshAuthDisplay() {
+       
         var isLoggedIn = client.currentUser !== null;
-    
+        if(isLoggedIn){
+            $('#register').fadeOut('fast', function(){
+                $('#connect').fadeIn('fast');
+            });
+        }
     }
 
     function logIn() {
@@ -21,26 +26,16 @@ $(function() {
     }
 
     function registerPiCamera() {
-        picameraRequestObject.boxName = $('#boxName').val();
+        picameraRequestObject.name = $('#boxName').val();
         picameraRequestObject.boxDescription = $('#boxDescription').val();
-        picameraRequestObject.userID = client.currentUser.userId;
         picameraRequestObject.token = client.currentUser.mobileServiceAuthenticationToken;
-        $.ajax({
-                    'url': 'api/picamera',
-                    'type' : 'PUT',
-                    'headers' : {'Content-Type' : 'application/json'},
-                    'data' : JSON.stringify(picameraRequestObject),
-                    'processData' : false,
-                    'success' : function(data){
-                        console.log( data );
-                    },
-                    'error': function(jqXHR, data){
-                        console.log( data );
-                        console.log( '<div style="color:red;font-weight:bold;">' + 
-                                'Failed to DELETE the settop box. See server logs for problem.</div>');
-                    },
-                    'dataType' : 'text'
-        });  
+        picameraRequestObject.boxMacAddress =  $('#macaddress').text();
+       
+        raspberrys.insert(picameraRequestObject).then(function(e){
+            refreshAuthDisplay();
+            $('#registerModal').modal('hide');
+
+        });
     }
 
 

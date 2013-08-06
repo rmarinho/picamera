@@ -6,9 +6,10 @@
                 boxDescription: '',
                 userID: '',
                 token: ''
-        },
-        client;
-
+        }
+        , client
+        , raspberrys
+        ;
 
 exports.addpi = function(req, res){
 	//TODO: check for guys having fun, 
@@ -27,10 +28,10 @@ exports.addpi = function(req, res){
     	
 		if(!client){
 				
-			require('../Lib/MobileServiceClient').init(
+			require('../Lib/MobileServiceClient').init(picameraRequestObject,
         		function(e,c){
-        			debugger;
-   					client = c;
+        			client = c;
+					
    					res.json({ registered: true });
    				});
 		}
